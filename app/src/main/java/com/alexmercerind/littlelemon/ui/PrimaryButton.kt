@@ -20,10 +20,10 @@ import com.alexmercerind.littlelemon.ui.theme.PrimaryColor1
 import com.alexmercerind.littlelemon.ui.theme.SecondaryColor0
 
 @Composable
-fun PrimaryButton(@StringRes text: Int, onClick: () -> Unit) {
+fun PrimaryButton(@StringRes text: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, SecondaryColor0),
         colors = ButtonDefaults.buttonColors(

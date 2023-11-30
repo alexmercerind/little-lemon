@@ -9,6 +9,11 @@ import androidx.compose.ui.unit.sp
 import com.alexmercerind.littlelemon.R
 
 val Typography = Typography(
+    headlineMedium = TextStyle(
+        fontSize = 28.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = FontFamily(listOf(Font(R.font.karla)))
+    ),
     titleLarge = TextStyle(
         color = HighlightColor1,
         fontSize = 24.sp,

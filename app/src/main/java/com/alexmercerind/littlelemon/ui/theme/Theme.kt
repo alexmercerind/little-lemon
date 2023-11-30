@@ -1,7 +1,6 @@
 package com.alexmercerind.littlelemon.ui.theme
 
 import android.app.Activity
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -26,7 +25,6 @@ fun LittleLemonTheme(
         colorScheme = lightColorScheme(
             primary = PrimaryColor0,
             secondary = PrimaryColor1,
-            primaryContainer = PrimaryColor1,
         ),
         typography = Typography,
         content = content
