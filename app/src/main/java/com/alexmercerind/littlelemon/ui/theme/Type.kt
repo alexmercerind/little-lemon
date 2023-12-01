@@ -9,14 +9,38 @@ import androidx.compose.ui.unit.sp
 import com.alexmercerind.littlelemon.R
 
 val Typography = Typography(
+    displayLarge = TextStyle(
+        color = PrimaryColor1,
+        fontSize = 56.sp,
+        letterSpacing = 2.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily(listOf(Font(R.font.markazi_text)))
+    ),
+    displayMedium = TextStyle(
+        color = HighlightColor0,
+        fontSize = 40.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = FontFamily(listOf(Font(R.font.markazi_text)))
+    ),
+    displaySmall = TextStyle(
+        color = HighlightColor0,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily(listOf(Font(R.font.karla)))
+    ),
     headlineMedium = TextStyle(
         fontSize = 28.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = FontFamily(listOf(Font(R.font.karla)))
     ),
     titleLarge = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Black,
+        fontFamily = FontFamily(listOf(Font(R.font.karla)))
+    ),
+    titleMedium = TextStyle(
         color = HighlightColor1,
-        fontSize = 24.sp,
+        fontSize = 20.sp,
         fontWeight = FontWeight.ExtraBold,
         fontFamily = FontFamily(listOf(Font(R.font.karla)))
     ),

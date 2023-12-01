@@ -44,7 +44,7 @@ fun OnboardingScreen() {
 
     val scroll = rememberScrollState()
 
-    Scaffold(topBar = { PrimaryTopAppBar(showProfileIcon = true) }) { padding ->
+    Scaffold(topBar = { PrimaryTopAppBar(showProfileIcon = false) }) { padding ->
         Column(
             modifier = Modifier
                 .heightIn(540.dp, (1 shl 16).dp)
@@ -72,7 +72,7 @@ fun OnboardingScreen() {
 
             Text(
                 text = stringResource(id = R.string.personal_information_title),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 

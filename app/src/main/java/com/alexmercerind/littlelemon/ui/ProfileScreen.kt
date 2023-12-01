@@ -37,7 +37,7 @@ fun ProfileScreen() {
 
     val scroll = rememberScrollState()
 
-    Scaffold(topBar = { PrimaryTopAppBar(showProfileIcon = true) }) { padding ->
+    Scaffold(topBar = { PrimaryTopAppBar() }) { padding ->
         Column(
             modifier = Modifier
                 .heightIn(540.dp, (1 shl 16).dp)
@@ -53,7 +53,7 @@ fun ProfileScreen() {
 
             Text(
                 text = stringResource(id = R.string.personal_information_title),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium
             )
 
             Spacer(modifier = Modifier.height(32.dp))
