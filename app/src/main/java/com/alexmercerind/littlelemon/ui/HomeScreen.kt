@@ -3,7 +3,9 @@ package com.alexmercerind.littlelemon.ui
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -55,12 +58,16 @@ import kotlinx.coroutines.withContext
 @Composable
 fun HomeScreen() {
     val homeScreenViewModel = viewModel<HomeScreenViewModel>()
-    var menu by rememberSaveable { mutableStateOf<List<CacheMenuItem>?>(null) }
+    var items by rememberSaveable { mutableStateOf<List<CacheMenuItem>?>(null) }
+
+    var term by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect("HomeScreen") {
-        val result = homeScreenViewModel.getMenu()
-        withContext(Dispatchers.IO) { menu = result }
-        Log.d(Constants.LOG_TAG, result.toString())
+        withContext(Dispatchers.IO) {
+            val result = homeScreenViewModel.getMenu()
+            items = result
+            Log.d(Constants.LOG_TAG, result.toString())
+        }
     }
 
     Scaffold(topBar = { PrimaryTopAppBar() }) { padding ->
@@ -113,8 +120,8 @@ fun HomeScreen() {
                         placeholder = {
                             Text(text = stringResource(id = R.string.search_placeholder))
                         },
-                        value = "",
-                        onValueChange = {},
+                        value = term,
+                        onValueChange = { term = it },
                         shape = RoundedCornerShape(12.dp),
                         leadingIcon = {
                             Icon(
@@ -133,7 +140,7 @@ fun HomeScreen() {
             }
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                     .fillMaxWidth()
             ) {
                 Text(
@@ -156,17 +163,37 @@ fun HomeScreen() {
                         modifier = Modifier.clip(RoundedCornerShape(12.dp))
                     ) {
                         Text(
-                            text = stringResource(id = res), modifier = Modifier.padding(10.dp)
+                            text = stringResource(id = res), modifier = Modifier.padding(8.dp)
                         )
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Divider()
             }
-            LazyColumn(
-                modifier = Modifier.weight(0.5F)
-            ) {
-
+            Divider(thickness = 1.dp)
+            if (items == null) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .weight(1.0F)
+                        .fillMaxWidth()
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                // Sort & Filter
+                val result = items!!
+                    .sortedBy { it.title }
+                    .filter { it.title.contains(term, ignoreCase = true) }
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1.0F)
+                        .padding(0.dp),
+                    contentPadding = PaddingValues(vertical = 8.dp)
+                ) {
+                    items(result.size) {
+                        MenuItemTile(result[it])
+                    }
+                }
             }
         }
     }

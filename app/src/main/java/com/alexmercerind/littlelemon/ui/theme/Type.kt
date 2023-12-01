@@ -44,6 +44,11 @@ val Typography = Typography(
         fontWeight = FontWeight.ExtraBold,
         fontFamily = FontFamily(listOf(Font(R.font.karla)))
     ),
+    titleSmall = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = FontFamily(listOf(Font(R.font.karla)))
+    ),
     bodyLarge = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.ExtraBold,

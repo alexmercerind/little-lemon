@@ -67,7 +67,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:2.1.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.1.3")
 
-    implementation("io.coil-kt:coil:2.5.0")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-ktx:$roomVersion")

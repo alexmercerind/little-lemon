@@ -13,15 +13,22 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,9 +38,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alexmercerind.littlelemon.R
 import com.alexmercerind.littlelemon.ui.theme.LittleLemonTheme
 import com.alexmercerind.littlelemon.ui.theme.PrimaryColor0
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +52,12 @@ fun OnboardingScreen() {
     var email by rememberSaveable { mutableStateOf("") }
 
     val scroll = rememberScrollState()
+    val scope = rememberCoroutineScope()
+
+    val userViewModel = viewModel<UserViewModel>()
+
+    var success by rememberSaveable { mutableStateOf(false) }
+    var fail by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(topBar = { PrimaryTopAppBar(showProfileIcon = false) }) { padding ->
         Column(
@@ -54,8 +69,7 @@ fun OnboardingScreen() {
                 .imePadding(),
         ) {
             Surface(
-                color = PrimaryColor0,
-                modifier = Modifier
+                color = PrimaryColor0, modifier = Modifier
                     .height(120.dp)
                     .fillMaxWidth()
             ) {
@@ -134,15 +148,51 @@ fun OnboardingScreen() {
 
 
             PrimaryButton(
-                text = R.string.register, modifier = Modifier
+                text = R.string.register,
+                modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
             ) {
-                /*TODO*/
+                scope.launch {
+                    if (firstName.isNotBlank() && lastName.isNotBlank() && email.isNotBlank()) {
+                        success = true
+                        userViewModel.save(firstName, lastName, email)
+                    } else {
+                        fail = true
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+
+    if (fail) {
+        AlertDialog(
+            onDismissRequest = { fail = false },
+            confirmButton = {
+                TextButton(
+                    onClick = { fail = false }
+                ) {
+                    Text(text = stringResource(id = R.string.ok))
+                }
+            },
+            text = { Text(text = stringResource(id = R.string.registration_fail)) }
+        )
+    }
+
+    if (success) {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                TextButton(
+                    onClick = { /*TODO*/ }
+                ) {
+                    Text(text = stringResource(id = R.string.ok))
+                }
+            },
+            text = { Text(text = stringResource(id = R.string.registration_success)) }
+        )
     }
 }
 
