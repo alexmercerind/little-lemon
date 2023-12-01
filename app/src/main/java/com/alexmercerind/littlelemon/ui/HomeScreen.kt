@@ -42,13 +42,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.alexmercerind.littlelemon.R
 import com.alexmercerind.littlelemon.db.entities.CacheMenuItem
 import com.alexmercerind.littlelemon.ui.theme.HighlightColor0
-import com.alexmercerind.littlelemon.ui.theme.LittleLemonTheme
 import com.alexmercerind.littlelemon.ui.theme.PrimaryColor0
 import com.alexmercerind.littlelemon.utils.Constants
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +55,7 @@ import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val homeScreenViewModel = viewModel<HomeScreenViewModel>()
     var items by rememberSaveable { mutableStateOf<List<CacheMenuItem>?>(null) }
 
@@ -70,7 +69,7 @@ fun HomeScreen() {
         }
     }
 
-    Scaffold(topBar = { PrimaryTopAppBar() }) { padding ->
+    Scaffold(topBar = { PrimaryTopAppBar(navController, showProfileIcon = true) }) { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
@@ -196,13 +195,5 @@ fun HomeScreen() {
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    LittleLemonTheme {
-        HomeScreen()
     }
 }

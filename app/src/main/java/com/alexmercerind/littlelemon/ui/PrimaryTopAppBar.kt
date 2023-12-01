@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.alexmercerind.littlelemon.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PrimaryTopAppBar(showProfileIcon: Boolean = true) {
-    val width = LocalConfiguration.current.screenWidthDp - 56.0
+fun PrimaryTopAppBar(navController: NavController, showProfileIcon: Boolean = false) {
+    val width = LocalConfiguration.current.screenWidthDp - 64.0
     TopAppBar(
         title = {
             Row(modifier = Modifier.width(width.dp)) {
@@ -36,30 +36,15 @@ fun PrimaryTopAppBar(showProfileIcon: Boolean = true) {
             }
         },
         actions = {
-            if (showProfileIcon)
-                IconButton(onClick = { /*TODO*/ }) {
-                    Image(
-                        painter = painterResource(id = R.drawable.profile),
-                        contentDescription = stringResource(id = R.string.app_name),
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .aspectRatio(1.0F)
-                    )
-                }
+            if (showProfileIcon) IconButton(onClick = { navController.navigate(Profile.route) }) {
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = stringResource(id = R.string.app_name),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1.0F)
+                )
+            }
         },
     )
 }
-
-@Preview
-@Composable
-fun PrimaryTopAppBarPreviewShowProfileIcon() {
-    PrimaryTopAppBar(showProfileIcon = true)
-}
-
-@Preview
-@Composable
-fun PrimaryTopAppBarPreviewHideProfileIcon() {
-    PrimaryTopAppBar(showProfileIcon = false)
-}
-
-

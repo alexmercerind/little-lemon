@@ -22,16 +22,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.alexmercerind.littlelemon.R
-import com.alexmercerind.littlelemon.ui.theme.LittleLemonTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     val userViewModel = viewModel<UserViewModel>()
 
     val firstName by userViewModel.firstName.collectAsState()
@@ -42,7 +41,7 @@ fun ProfileScreen() {
     val scope = rememberCoroutineScope()
 
 
-    Scaffold(topBar = { PrimaryTopAppBar() }) { padding ->
+    Scaffold(topBar = { PrimaryTopAppBar(navController) }) { padding ->
         Column(
             modifier = Modifier
                 .heightIn(540.dp, (1 shl 16).dp)
@@ -120,18 +119,12 @@ fun ProfileScreen() {
             ) {
                 scope.launch {
                     userViewModel.clear()
+
+                    navController.navigate(Onboarding.route)
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-@Preview
-@Composable
-fun ProfileScreenPreview() {
-    LittleLemonTheme {
-        ProfileScreen()
     }
 }

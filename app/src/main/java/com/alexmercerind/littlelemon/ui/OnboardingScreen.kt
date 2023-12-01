@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,35 +17,29 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.alexmercerind.littlelemon.R
-import com.alexmercerind.littlelemon.ui.theme.LittleLemonTheme
 import com.alexmercerind.littlelemon.ui.theme.PrimaryColor0
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(navController: NavController) {
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -59,7 +52,7 @@ fun OnboardingScreen() {
     var success by rememberSaveable { mutableStateOf(false) }
     var fail by rememberSaveable { mutableStateOf(false) }
 
-    Scaffold(topBar = { PrimaryTopAppBar(showProfileIcon = false) }) { padding ->
+    Scaffold(topBar = { PrimaryTopAppBar(navController) }) { padding ->
         Column(
             modifier = Modifier
                 .heightIn(540.dp, (1 shl 16).dp)
@@ -183,23 +176,15 @@ fun OnboardingScreen() {
 
     if (success) {
         AlertDialog(
-            onDismissRequest = { /*TODO*/ },
+            onDismissRequest = { navController.navigate(Home.route) },
             confirmButton = {
                 TextButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { navController.navigate(Home.route) }
                 ) {
                     Text(text = stringResource(id = R.string.ok))
                 }
             },
             text = { Text(text = stringResource(id = R.string.registration_success)) }
         )
-    }
-}
-
-@Preview
-@Composable
-fun OnboardingScreenPreview() {
-    LittleLemonTheme {
-        OnboardingScreen()
     }
 }

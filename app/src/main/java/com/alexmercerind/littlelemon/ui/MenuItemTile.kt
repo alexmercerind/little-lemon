@@ -17,10 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alexmercerind.littlelemon.db.entities.CacheMenuItem
-import com.alexmercerind.littlelemon.ui.theme.LittleLemonTheme
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
@@ -74,22 +72,5 @@ fun MenuItemTile(cacheMenuItem: CacheMenuItem) {
                     .aspectRatio(1.0F),
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun MenuItemTilePreview() {
-    LittleLemonTheme {
-        MenuItemTile(
-            CacheMenuItem(
-                0,
-                "Greek Salad",
-                "The famous greek salad of crispy lettuce, peppers, olives, our Chicago.",
-                "10",
-                "https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/greekSalad.jpg?raw=true",
-                "Starters"
-            )
-        )
     }
 }

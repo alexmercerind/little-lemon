@@ -69,6 +69,9 @@ dependencies {
 
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    val navVerion = "2.7.5"
+    implementation("androidx.navigation:navigation-compose:$navVerion")
+
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
